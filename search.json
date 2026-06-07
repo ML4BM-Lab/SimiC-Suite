@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SimiC-Suite",
+    "section": "",
+    "text": "SimiC-Suite graphical abstract"
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "SimiC-Suite",
+    "section": "Overview",
+    "text": "Overview\nSimiC-Suite is a software suite for phenotype-specific gene regulatory network (GRN) analysis from single-cell RNA-seq data. It brings together complementary tools for GRN inference, Regulon Activity Score (RAS) calculation, and downstream assessment and visualization."
+  },
+  {
+    "objectID": "index.html#packages",
+    "href": "index.html#packages",
+    "title": "SimiC-Suite",
+    "section": "Packages",
+    "text": "Packages\n\n\n\nPackage\nLanguage / ecosystem\nPurpose\n\n\n\n\nSimiCPipeline\nPython\nPhenotype-specific GRN inference and Regulon Activity Score (RAS) calculation.\n\n\nSimiCviz\nR / Bioconductor\nTool-agnostic assessment and visualization of GRN outputs."
+  },
+  {
+    "objectID": "index.html#simicpipeline",
+    "href": "index.html#simicpipeline",
+    "title": "SimiC-Suite",
+    "section": "SimiCPipeline",
+    "text": "SimiCPipeline\nSimiCPipeline is the Python component of SimiC-Suite. It supports reproducible phenotype-specific GRN inference from single-cell RNA-seq data and calculation of Regulon Activity Score (RAS) values for downstream biological interpretation.\nSimiCPipeline builds on the SimiC framework for phenotype-aware regulatory network analysis. Please cite the original SimiC work when using SimiCPipeline where appropriate."
+  },
+  {
+    "objectID": "index.html#simicviz",
+    "href": "index.html#simicviz",
+    "title": "SimiC-Suite",
+    "section": "SimiCviz",
+    "text": "SimiCviz\nSimiCviz is the R / Bioconductor component of SimiC-Suite. It provides tool-agnostic workflows for assessing, comparing, and visualizing GRN outputs, supporting interpretation across GRN inference methods."
+  },
+  {
+    "objectID": "index.html#repositories",
+    "href": "index.html#repositories",
+    "title": "SimiC-Suite",
+    "section": "Repositories",
+    "text": "Repositories\n\nSimiCPipeline: https://github.com/ML4BM-Lab/SimiCPipeline\nSimiCviz: https://github.com/ML4BM-Lab/SimiCviz"
+  },
+  {
+    "objectID": "citation.html",
+    "href": "citation.html",
+    "title": "Citation",
+    "section": "",
+    "text": "Please cite the SimiC-Suite application note when using the combined software suite.\n@article{simic_suite_placeholder,\n  title   = {SimiC-Suite: A reproducible framework for phenotype-specific gene regulatory network analysis from single-cell RNA-seq data},\n  author  = {Author names to be added},\n  journal = {Journal to be added},\n  year    = {Year to be added},\n  doi     = {DOI to be added}\n}"
+  },
+  {
+    "objectID": "citation.html#simic-suite",
+    "href": "citation.html#simic-suite",
+    "title": "Citation",
+    "section": "",
+    "text": "Please cite the SimiC-Suite application note when using the combined software suite.\n@article{simic_suite_placeholder,\n  title   = {SimiC-Suite: A reproducible framework for phenotype-specific gene regulatory network analysis from single-cell RNA-seq data},\n  author  = {Author names to be added},\n  journal = {Journal to be added},\n  year    = {Year to be added},\n  doi     = {DOI to be added}\n}"
+  },
+  {
+    "objectID": "citation.html#original-simic-citation",
+    "href": "citation.html#original-simic-citation",
+    "title": "Citation",
+    "section": "Original SimiC Citation",
+    "text": "Original SimiC Citation\nPlease also cite the original SimiC work when using SimiCPipeline where appropriate.\n@article{simic_original_placeholder,\n  title   = {Original SimiC citation title to be added},\n  author  = {Author names to be added},\n  journal = {Journal to be added},\n  year    = {Year to be added},\n  doi     = {DOI to be added}\n}"
+  },
+  {
+    "objectID": "documentation.html",
+    "href": "documentation.html",
+    "title": "Documentation",
+    "section": "",
+    "text": "SimiC-Suite contains two complementary packages:\n\n\n\nPackage\nMain role\nRepository\n\n\n\n\nSimiCPipeline\nPhenotype-specific GRN inference and Regulon Activity Score (RAS) calculation.\nhttps://github.com/ML4BM-Lab/SimiCPipeline\n\n\nSimiCviz\nAssessment, comparison, and visualization of GRN outputs.\nhttps://github.com/ML4BM-Lab/SimiCviz"
+  },
+  {
+    "objectID": "documentation.html#getting-started",
+    "href": "documentation.html#getting-started",
+    "title": "Documentation",
+    "section": "",
+    "text": "SimiC-Suite contains two complementary packages:\n\n\n\nPackage\nMain role\nRepository\n\n\n\n\nSimiCPipeline\nPhenotype-specific GRN inference and Regulon Activity Score (RAS) calculation.\nhttps://github.com/ML4BM-Lab/SimiCPipeline\n\n\nSimiCviz\nAssessment, comparison, and visualization of GRN outputs.\nhttps://github.com/ML4BM-Lab/SimiCviz"
+  },
+  {
+    "objectID": "documentation.html#simicpipeline",
+    "href": "documentation.html#simicpipeline",
+    "title": "Documentation",
+    "section": "SimiCPipeline",
+    "text": "SimiCPipeline\nUse SimiCPipeline when the goal is to infer phenotype-specific gene regulatory networks from single-cell RNA-seq data and compute Regulon Activity Score (RAS) values.\nMain repository:\nhttps://github.com/ML4BM-Lab/SimiCPipeline"
+  },
+  {
+    "objectID": "documentation.html#simicviz",
+    "href": "documentation.html#simicviz",
+    "title": "Documentation",
+    "section": "SimiCviz",
+    "text": "SimiCviz\nUse SimiCviz when the goal is to assess, compare, and visualize GRN outputs in R / Bioconductor workflows. SimiCviz is designed to be tool-agnostic, so it can support outputs from different GRN inference approaches.\nMain repository:\nhttps://github.com/ML4BM-Lab/SimiCviz"
+  },
+  {
+    "objectID": "documentation.html#suggested-workflow",
+    "href": "documentation.html#suggested-workflow",
+    "title": "Documentation",
+    "section": "Suggested Workflow",
+    "text": "Suggested Workflow\n\nPrepare single-cell RNA-seq data and phenotype annotations.\nRun SimiCPipeline for phenotype-specific GRN inference.\nCalculate Regulon Activity Score (RAS) values with SimiCPipeline.\nUse SimiCviz to assess and visualize GRN outputs."
+  }
+]
