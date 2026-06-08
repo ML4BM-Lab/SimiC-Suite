@@ -20,13 +20,17 @@ Please cite the SimiC-Suite application note when using the combined software su
 
 Please also cite the original SimiC work when using SimiCPipeline where appropriate.
 
+Peng, J., Serrano, G., Traniello, I.M. et al. SimiC enables the inference of complex gene regulatory dynamics across cell phenotypes. *Communications Biology* 5, 351 (2022). <https://doi.org/10.1038/s42003-022-03319-7>
+
 ```bibtex
-@article{simic_original_placeholder,
-  title   = {Original SimiC citation title to be added},
-  author  = {Author names to be added},
-  journal = {Journal to be added},
-  year    = {Year to be added},
-  doi     = {DOI to be added}
+@article{peng2022simic,
+  title   = {SimiC enables the inference of complex gene regulatory dynamics across cell phenotypes},
+  author  = {Peng, Jianlong and Serrano, Ginny and Traniello, Irene M. and others},
+  journal = {Communications Biology},
+  volume  = {5},
+  number  = {1},
+  pages   = {351},
+  year    = {2022},
+  doi     = {10.1038/s42003-022-03319-7}
 }
 ```
-
