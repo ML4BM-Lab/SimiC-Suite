@@ -13,44 +13,40 @@ SimiC-Suite is a software suite for phenotype-specific gene regulatory network (
 
 ## Suite Components
 
-::: {.package-tabs .panel-tabset}
+::: {.component-grid}
 
-## SimiCPipeline
+::: {.component-card .pipeline-card}
+### SimiCPipeline
 
-::: {.package-panel .pipeline-panel}
-
-**SimiCPipeline** is the Python component of SimiC-Suite for phenotype-specific GRN inference and Regulon Activity Score (RAS) calculation.
+Python package for phenotype-specific GRN inference and Regulon Activity Score (RAS) calculation.
 
 | Feature | Description |
 |---|---|
 | Ecosystem | Python |
-| Primary role | Infer phenotype-specific gene regulatory networks from single-cell RNA-seq data. |
-| Main outputs | Label-specific GRN weights and Regulon Activity Score (RAS) values. |
-| Suite position | Upstream inference and RAS calculation before downstream assessment and visualization. |
+| Role | Upstream inference and RAS calculation. |
+| Tutorials | Rendered Jupyter notebooks from the package repository. |
 
-SimiCPipeline builds on the SimiC framework for phenotype-aware regulatory network analysis. Please cite the original SimiC work when using SimiCPipeline where appropriate.
-
-[View SimiCPipeline on GitHub](https://github.com/ML4BM-Lab/SimiCPipeline){.btn .btn-primary}
-
+[Open SimiCPipeline](simicpipeline.qmd){.btn .btn-primary}
 :::
 
-## SimiCviz
+::: {.component-card .viz-card}
+### SimiCviz
 
-::: {.package-panel .viz-panel}
-
-**SimiCviz** is the R / Bioconductor component of SimiC-Suite for tool-agnostic assessment and visualization of GRN outputs.
+R / Bioconductor package for tool-agnostic assessment and visualization of GRN outputs.
 
 | Feature | Description |
 |---|---|
 | Ecosystem | R / Bioconductor |
-| Primary role | Assess, compare, and visualize GRN outputs across inference workflows. |
-| Main outputs | Reproducible tables, figures, summaries, and visualizations for GRN interpretation. |
-| Suite position | Downstream analysis and reporting after GRN inference and RAS calculation. |
+| Role | Downstream assessment, visualization, and reporting. |
+| Tutorials | Local copy of the rendered package vignette. |
 
-SimiCviz supports interpretation of GRN outputs in R-centered analysis workflows and is designed to be independent of a single GRN inference tool.
-
-[View SimiCviz on GitHub](https://github.com/ML4BM-Lab/SimiCviz){.btn .btn-danger}
+[Open SimiCviz](simicviz.qmd){.btn .btn-danger}
 
 :::
 
 :::
+
+## Repositories
+
+- SimiCPipeline: <https://github.com/ML4BM-Lab/SimiCPipeline>
+- SimiCviz: <https://github.com/ML4BM-Lab/SimiCviz>

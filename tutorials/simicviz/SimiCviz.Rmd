@@ -1,0 +1,677 @@
+--- 
+title: "SimiCviz: Visualization and Analysis of Gene Regulatory Networks"
+author: "Irene Marín-Goñi"
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{SimiCviz: Visualization and Analysis of Gene Regulatory Networks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+--- 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = TRUE,
+  comment = "##"
+)
+options(width=60)
+library(SimiCviz)
+```
+
+# Overview
+
+**SimiCviz** provides various utilities for gene regulatory network (GRN) analysis for single-cell RNA-seq data. Originally developed to visualize the phenotype-specific GRN output from [**`SimiCPipeline`**](https://github.com/ML4BM-Lab/SimiCPipeline.git) for `R` users, it also includes tools for:
+
+- **Load and organize** GRN outputs from multiple sources (SimiCPipeline, SCENIC, Pando, etc.)
+- **Calculate cell activity scores** (AS) using expression data and GRN weights.
+- **Visualize** regulatory networks, distribution of TF/regulon activities, and dissimilarity across conditions.
+
+The package is interoperable and agnostic to the GRN inference methods, accepting different GRN outputs.
+
+ 
+
+# Loading GRN Data
+
+## Data Format Requirements
+SimiCviz easily handles `SimiCPipeline` outputs but also accepts GRN weights in a flexible long format. The input `data.frame` must include the following columns: 
+
+- **`tf`**: Transcription factor name
+- **`target`**: Target gene name  
+- **`weight`**: Edge weight/coefficient
+- **`label`** (optional): Phenotype/condition identifier for label-specific networks
+
+Optional quality metrics for filtering weights:
+
+- **`pvalue` / `adj_p_val`**: Statistical significance (for methods like SCENIC, Pando)
+- **`r_squared` / `adj_r_squared`**: Goodness of fit (for methods like SimiC)
+
+ 
+
+## SimiCPipeline Outputs
+
+[**`SimiCPipeline`**](https://github.com/ML4BM-Lab/SimiCPipeline.git) is a regularized regression method for inferring condition-specific GRNs. It generates:
+
+- `.pickle` files with TF-target weights per phenotype/label and adjusted R² values for goodness of fit of the target expression model. 
+- `.csv` file with a TF activity score matrix (cells × TFs)
+- `.pickle` files with per-label matrices (cells × TFs) [Legacy SimiC v1 - Deprecated]
+
+These outputs are organized in a directory structure like this:
+```
+Project/
+├── inputFiles/
+│   ├── TF_list.csv
+│   ├── expression_matrix.pickle
+│   └── phenotype_annotation.txt
+└── outputSimic/
+    ├── figures/
+    └── matrices/
+        └── example1/
+            ├── example1_L1_0.1_L2_0.01_simic_matrices.pickle
+            ├── example1_L1_0.1_L2_0.01_simic_matrices_filtered_BIC.pickle
+            ├── example1_L1_0.1_L2_0.01_wAUC_matrices_filtered_BIC.pickle
+            └── example1_L1_0.1_L2_0.01_wAUC_matrices_filtered_BIC_collected.csv
+```
+
+Here we show how to easily load a `SimiCPipeline` run. You only need the directory, experiment name, and hyperparameters since the directory output is standardized. `SimiCviz` will automatically find the files and generate the `SimiCvizExperiment`.
+
+```{r, echo = FALSE}
+simic_full <- readRDS(system.file("extdata", file.path("simic_full.rds"), 
+                                  package = "SimiCviz"))
+```
+
+```{r, eval = FALSE, results='hold'}
+library(SimiCviz)
+
+# Load entire SimiCPipeline run automatically
+simic_full <- load_SimiCPipeline(
+  project_dir = "path/to/simic_run",
+  run_name = "example1",
+  lambda1 = "0.01",
+  lambda2 = "0.001"
+)
+
+# Set display names and colors for visualization (Part 3)
+simic_full <- setLabelNames(
+  simic_full, 
+  label_names = c("control", "PD-L1", "DAC", "Combination"),
+  colors = c("#e0e0e0", "#a8c8ff", "#ffb6b6", "#c1a9e0")
+)
+```
+
+```{r}
+simic_full
+```
+If you run the full [`SimiCPipeline` tutorial ](https://github.com/ML4BM-Lab/SimiCPipeline/blob/master/notebooks/Tutorial_SimiCPipeline_full.ipynb) you can skip Part 2 and go straight to Part 3 for visualizations.
+
+
+## Manual Loading
+If you need more flexibility in the workflow, or have precomputed outputs using SimiC v1, you can construct `SimiCvizExperiment` or `AUCProcessor` objects by loading the required files separately.
+
+### Weights from pickle
+
+```{r}
+
+# Load weights from pickle
+weights_file <- system.file("extdata", 
+  file.path("outputSimic/example1_simic_weights.pickle"), 
+  package = "SimiCviz")
+
+simic_weights <- read_weights_pickle(weights_file)
+simic_weights[[1]][, 1:6]
+
+```
+
+ 
+
+### Weights from other methods
+
+Most single-cell GRN inference methods produce table outputs with TF-target weights/estimates and p-values.
+
+#### Example: Generic CSV Format
+
+```{r}
+# Load GRN weights (method agnostic)
+
+weight_path <- system.file("extdata", "example_weights.csv", 
+                           package = "SimiCviz")
+
+# Read as data.frame
+weights_df <- read_weights_csv(weight_path)
+head(weights_df)
+
+# If your method uses different column names you need to rename them
+```
+
+Expected columns in CSV:
+```{eval=FALSE}
+# Minimal
+tf, target, weight
+# If only one GRN a column name "label" will be all values in label should be 0
+
+# With quality metrics
+tf, target, weight, pvalue, adj_p_val
+
+# With phenotype labels
+tf, target, weight, label, pvalue, adj_p_val
+```
+
+ 
+
+### Cell Labels / Phenotype Annotations
+
+The `cell_labels` map each cell ID in your expression matrix or activity scores matrix to a condition/phenotype. This is required for activity score calculation and AUC visualizations.
+
+```{r}
+# Load from CSV (recommended format: columns 'cell', 'label')
+cell_labels_path <- system.file("extdata",
+  file.path("inputFiles", "treatment_annotation.csv"), 
+  package = "SimiCviz")
+
+cell_labels <- load_cell_labels(cell_labels_path, header = TRUE, sep = ",")
+head(cell_labels)
+```
+
+The function `load_cell_labels` can take alternative formats/files:
+```{r, eval=FALSE}
+# From vector (will generate cell_1, cell_2, ... names)
+cell_labels <- c(0, 0, 1, 1, 2, 2)  # Must match order of AUC rows
+
+# From named vector
+cell_labels <- c(cell_A = 0, cell_B = 0, cell_C = 1)
+
+# From data.frame
+cell_labels <- data.frame(cell = c("cell_A", "cell_B"), label = c(0, 1))
+```
+
+ 
+
+### Expression Matrix
+
+Only required for computing activity scores. Can be:
+
+- **CSV file**
+- **Pickle file**: numpy array or pandas DataFrame
+- **H5AD file**: AnnData object
+- **RDS file**: Seurat or SingleCellExperiment object
+- **R object**: matrix or data.frame
+
+**Important**: Final expression matrix must be in **genes × cells** format (genes as rows, cells as columns).
+
+```{r}
+# Load from multiple formats
+expression_mat_path <- system.file("extdata",
+  file.path("inputFiles", "example1_expression.pickle"),
+  package = "SimiCviz")
+
+# Will auto-detect format and load
+expression_mat <- load_expression_matrix(expression_mat_path)
+print(class(expression_mat))
+print(dim(expression_mat))
+```
+
+ 
+
+### Create a SimiCvizExperiment Object
+
+The `SimiCvizExperiment` container organizes weights, activity scores, and metadata.
+
+```{r}
+# From .pickle SimiC files
+
+# Extract Adjusted R squared from SimiC outputs
+out <- read_pickle(weights_file)
+adjusted_r_squared <- out$adjusted_r_squared
+
+viz_obj_simic <- SimiCvizExperiment(
+  weights = simic_weights,
+  auc = NULL,  # Will compute this in the next section later but can be loaded as well
+  cell_labels = cell_labels,
+  label_names = c("control","PD-L1","DAC","Combination"),
+  colors = c("#e0e0e0", "#a8c8ff", "#ffb6b6", "#c1a9e0"),
+  meta=list(adjusted_r_squared=adjusted_r_squared))
+
+viz_obj_simic
+
+```
+
+ 
+
+# Computing Activity Scores (AUC)
+
+In many biological contexts, we aim to quantify changes in GRN activity across cell populations. This is achieved by computing an activity score for each TF in each cell, as described in the original [**SimiC**](https://www.nature.com/articles/s42003-022-03319-7.pdf) article by Peng *et al* published in  *Communications Biology* (2022). Here, we provide wrapper functions to apply this approach to outputs from `SimiCPipeline` or other GRN inference methods.
+
+## Quick Start
+
+Compute activity scores from TF-Target weights and expression matrix using `SimiCvizExperiment`
+
+```{r}
+# From SimiC input files
+# adj_r2_threshold: For SimiCPipeline style outputs it will look in metadata of viz_obj_simic, for "simic@meta$adjusted_r_squared" and filter out targets with lower R²)
+# n_cores: Number of workers if backend = 'multissession' or 
+#          Number of cores if backend  = 'multicore'
+
+viz_obj_simic <- calculate_activity_scores(
+              viz_obj_simic,
+              expression = expression_mat_path,
+              adj_r2_threshold = 0.7, # For SimiC style outputs 
+              sort_by="expression", # Rank targets by expression or weight
+              select_top_k = NULL,  # Use all targets (or limit to top K)
+              percent_of_target = 1.0,  
+              n_cores = 2,
+              backend = "multicore",
+              verbose = TRUE
+            )
+
+
+# Access computed scores
+auc_scores <- viz_obj_simic@auc$collected
+head(auc_scores[, 1:5])
+```
+
+ 
+
+## Advanced: AUCProcessor Workflow
+
+For more control over the computation pipeline, you can use `AUCProcessor` class directly.
+
+If your method outputs a quality metric for the inferred GRN, you can filter out unreliable TF-target relationships with the arguments:
+
+- `qc_type`: "adj_r2" or name of the column in `weights` to use (pval, padj, etc.). If 'qc_type' == "adj_r2" then cells *above* `qc_threshold` will be kept (e.g. R² > 0.7). If 'qc_type' != "adj_r2" (we assume is a pvalue) then cells *below* `qc_threshold` will be kept (e.g. adj_p_val < 0.05).
+- `qc_threshold`: desired threshold as described earlier.
+
+Tip: If your method output is different you should modify your input column names accordingly.
+
+```{r}
+# Initialize processor with weights and expression
+AS_processor <- AUCProcessor(
+  weights = weights_df,
+  expression = expression_mat_path,  # or matrix/data.frame
+  cell_labels = cell_labels,
+  qc_type = "adj_p_val",
+  qc_threshold = 0.05,  # Filter targets above this threshold
+  n_cores = 2,
+  backend = "multisession"
+)
+
+# Compute with custom parameters
+AS_processor <- compute_auc(
+  AS_processor,
+  sort_by = "expression",
+  select_top_k = NULL,            # Use all targets (or limit to top K)
+  percent_of_target = 1.0,        # Use all targets (or subset %)
+  verbose = TRUE
+)
+```
+
+```{r}
+# Extract results in wide format (default)
+auc_wide <- get_auc(AS_processor, format = "wide")
+head(auc_wide)
+```
+
+```{r}
+# Extract results long format
+auc_long <- get_auc(AS_processor, format = "long") # Long format
+head(auc_long)
+```
+
+Alternatively you can filter in advance your weights and use SimiCvizExperiment and the wrapper function `calculate_activity_scores`
+```{r, eval = F}
+weights_df <- read.csv("path/to/your/weights.csv")
+weights_df_filtered <- weights_df[weights_df$p_value < 0.01,]
+# From CSV files
+viz_obj <- SimiCvizExperiment(
+  weights = weights_df_filtered,
+  auc = NULL,  # Will compute this inthe next section later but can be loaded as well
+  cell_labels = cell_labels,
+  label_names = c("control","PD-L1","DAC","Combination"),
+  colors = c("#e0e0e0", "#a8c8ff", "#ffb6b6", "#c1a9e0"),
+  meta=list() # Anything you want to store in a list format
+  )
+
+viz_obj
+viz_obj <- calculate_activity_scores(
+              viz_obj,
+              expression = expression_mat_path,
+              adj_r2_threshold = 0.7, # For SimiC style outputs 
+              sort_by="expression", # Rank targets by expression or weight
+              select_top_k = NULL,  # Use all targets (or limit to top K)
+              percent_of_target = 1.0,  
+              n_cores = 2,
+              backend = "multisession",
+              verbose = TRUE
+            )
+```
+
+ 
+
+## Filtering Options
+
+Different GRN methods provide different quality metrics. Adjust filtering based on your method:
+
+```{r eval = FALSE}
+# SimiC: Filter by adjusted R² (goodness of fit)
+
+processor_simic <- AUCProcessor(
+  weights = simic_weights,
+  expression = expr_mat,
+  cell_labels = cell_labels,
+  adj_r2_list = adjusted_r_squared, # a list length as simic_weights
+  qc_type = "adj_r2",
+  qc_threshold = 0.7  # Keep targets with R² ≥ 0.7
+)
+
+# SCENIC / Pando: Filter by adjusted p-value
+processor_scenic <- AUCProcessor(
+  weights = weights_df,
+  expression = expr_mat,
+  cell_labels = cell_labels,
+  qc_type = "p_value",
+  qc_threshold = 0.05,  # Keep targets with adj_p_val ≤ 0.05
+  n_cores = 4,
+  backend = "multisession"
+  )
+
+# Compute with the same data, different parameters
+processor_scenic <- compute_auc(processor_scenic, sort_by = "weight")
+```
+
+ 
+
+
+Once you have computed the activity scores, you are ready to visualize the results!
+
+# Network Visualization
+
+For visualization we need a `SimiCvizExperiment` object loaded with the results.
+
+If you used `load_SimiCPipeline` or computed the activity scores with `calculate_activity_scores` you already have it.
+```{r}
+# Recall above examples
+ simic_full # Complete SimiCpipeline output
+ viz_obj_simic # SimiCPipeline weights -> `calculate_activity_scores`
+```
+
+Otherwise you can load your results in `SimiCvizExperiment` as exemplified above including the activity scores results in the `auc` slot.
+
+
+***Note**: Although activity score matrix is not strictly necessary, you need it to fully explore all the visualization tools of `SimiCviz`.*
+
+
+If you used other methods to calculate cell-specific activity scores with a different algorithm, you can import those as well in:
+
+- wide format: cells x TF scores matrix
+- long format: data.frame with cell, tf, score
+- .pickle file (only for SimiC v1)
+
+
+```{r}
+# Create SimiCvizExperiment
+simic <- SimiCvizExperiment(weights = simic_weights,
+                             auc = auc_wide,
+                             cell_labels = cell_labels,
+                             label_names = c("control","PD-L1","DAC","Combination"),
+                             colors = c("#e0e0e0", "#a8c8ff", "#ffb6b6", "#c1a9e0"))
+simic
+```
+After you created a `SimiCvizExperiment` object, we can use the plotting functions to visualize the results.
+
+If you want to save your plots in pdf you can define figure output directory `out_dir = plot_dir`, change the `filename` and set the argument `save = TRUE`
+```{r echo = FALSE}
+plot_dir <- file.path(getwd(),"SimiCviz_output","plots")
+```
+```{r eval = FALSE}
+plot_dir <- file.path(getwd(),"SimiCviz_output")
+dir.create(plot_dir,recursive = TRUE)
+```
+## Quality Assessment (SimiC only)
+To assess the goodness of SimiC's fitted model of target expression we can plot the distribution of adjusted R² values across all targets.
+```{r}
+# Plot distribution of adjusted R² values across targets
+# Extract Adjusted R squared from SimiC outputs
+out <- read_pickle(weights_file)
+adjusted_r_squared <- out$adjusted_r_squared
+plot_r2_distribution(adjusted_r_squared, simic, grid = c(2, 2), 
+                     save = FALSE, out_dir = plot_dir)
+```
+Here we can see that most of the R² values are over 0.7, indicating that the model explains a significant portion of the variance in the target gene expression. 
+
+Lower R² might indicate:
+
+- Noisy data
+- Missing regulatory interactions
+- Complex regulation not captured by linear model
+
+For these targets with low adjusted R2, we suggest to filter them out before plotting. We select a threshold of 0.7 as it was the same used to calculate the activity scores in SimiCPipeline and above. You can change this threshold as needed, but you should re-run the activity score calculation (or SimiCPipeline) with the same threshold to be consistent.
+
+*If you already filtered your weight matrix before creating the SimiCviz object you can skip this part*
+```{r}
+# Select targets by adjusted R2
+unselected_targets <- list()
+selected_targets <- list()
+lab_keys <- names(simic@label_names)
+for (lab in lab_keys){
+    # Save selected for plotting
+    selected_targets[[lab]] <- simic@target_ids[which(adjusted_r_squared[[lab]] >= 0.7)]
+    # Save unselected for reporting
+    label <- simic@label_names[[lab]]
+    unselected_targets[[label]] <- simic@target_ids[which(adjusted_r_squared[[lab]] < 0.7)]
+}
+print("Number of unselected targets per label:")
+print(sapply(unselected_targets, length)) 
+
+```
+ 
+
+## Weights Visualization
+
+### TF Barplots:
+We will plot the top 30 targets for the top 4 TFs. 
+You can change the number of TFs and targets to plot by changing the `tf_names` and `top_n` arguments.
+
+```{r fig.height=10, fig.width=10}
+plot_tf_weights(
+  simic,
+  tf_names = simic@tf_ids[1:4],
+  top_n = 25,
+  allowed_targets = selected_targets,  # Filter by R² if desired
+  grid = c(2, 2),
+  save = FALSE,
+  out_dir = plot_dir,
+  filename = "TF_weights_barplot.pdf"
+)
+```
+
+### Target Barplots: 
+Now we will plot the regulators of each target. This plot shows only the TFs with non-zero weights.
+
+```{r fig.height=5, fig.width=5}
+plot_target_weights(
+  simic,
+  target_names = simic@target_ids[1:4],
+  labels = c("control", "Combination"),
+  grid = c(2, 2),
+  save = FALSE,
+  out_dir = plot_dir,
+  filename = "Target_weights_barplot.pdf"
+)
+```
+
+***Note:** If you want to plot all TFs and Targets leave the `tf_names` and target_names arguments respectively blank.*
+***Note:**: You can also save the output and acces individual plots
+
+```{r include=FALSE}
+all_tfs_barplots <- plot_tf_weights(
+                          simic,
+                          top_n = 25, 
+                          grid = NULL,
+                          allowed_targets = selected_targets)
+
+
+```
+```{r eval = F}
+all_tfs_barplots <- plot_tf_weights(
+                          simic,
+                          top_n = 25, 
+                          grid = NULL,
+                          allowed_targets = selected_targets)
+```
+```{r}
+all_tfs_barplots[[1]]
+```
+
+### Regulatory Network Heatmap
+You can extract a TF regulon with the function `get_tf_network` and plot it as a heatmap.
+```{r}
+network <- get_tf_network(simic, "Tet2", r2_threshold = 0.7)
+print(head(network))
+
+plot_tf_network_heatmap(simic, "Tet2", 
+                        save = FALSE, 
+                        top_n = 15,
+                        r2_threshold = 0.7,
+                        show_values = TRUE, 
+                        cmap = c("purple","white","yellow"))
+
+```
+# Dissimilarity Analysis
+
+To prioritize those TFs of interest, that might be driving the regulatory differences between our groups we perform a dissimilarity analysis by comparing per-cell TF activity-score distributions across phenotype labels using the minmax version of total variation distance for multiple distributions. This metric has values between 0 and 1, with values closer to 0 when the group of distributions is more similar to each other. Consequently, higher scores indicate greater regulatory dissimilarity between conditions — i.e., TFs whose activity differs most across phenotypes.
+
+## Global dissimilarity scores
+```{r collapse=TRUE, results='hold'}
+dis_score <- calculate_dissimilarity(simic)
+top_tfs <- rownames(dis_score)
+```
+## Dissimilarity heatmap
+
+We can visualize the top TFs ranked by dissimilarity score in a heatmap fashion.
+
+```{r}
+plot_dissimilarity_heatmap(simic, 
+                           top_n = 5, 
+                           cmap = "viridis",
+                           save = FALSE)
+```
+Sometimes these transcriptional dynamics are cell-type or cell-cluster specific. In this case, we may want to calculate the dissimilarity scores across the labels within specific cell clusters. For that, we can subset the `SimiCvizExperiment` object by the desired labels and then calculate the dissimilarity scores and plot the heatmap as shown before.
+
+```{r}
+metadata <- read.csv(system.file("extdata/metadata.csv", 
+  package = "SimiCviz"))
+ 
+# Build cell groups from metadata (e.g. Seurat clusters, cell types, etc.)
+cell_groups  <- lapply(unique(metadata$final_annotation_functional), 
+                       function(celltype) {
+  cell_labels$cell[metadata$final_annotation_functional == celltype]
+})
+names(cell_groups) <- unique(metadata$final_annotation_functional)
+
+dissim_grouped <- calculate_dissimilarity(simic, labels = c(0,2),
+                                          cell_groups = cell_groups)
+
+# For all labels
+plot_dissimilarity_heatmap(simic,
+                            cell_groups = cell_groups, 
+                            top_n = 5,
+                            cmap=c("magma"),
+                            save = FALSE, out_dir = plot_dir,
+                            filename = "dissimilarity_heatmap_grouped.pdf")
+```
+
+We can also select the labels across which we want to compute the dissimilarity score with the argument `labels` and customize the color and sorting options.
+```{r}
+# For labels 0,2
+plot_dissimilarity_heatmap(simic,
+                            labels = c(0,2),
+                            cell_groups = cell_groups, 
+                            top_n = 5, 
+                            sort_by = "Proliferating.cells",
+                            cmap=c("red", "white", "blue"),
+                            save = FALSE)
+```
+
+
+# Activity Score Distributions
+
+Visualize TF activity distributions across conditions.
+These plots allow you to visually assess the differences in TF activity distributions across conditions, and can help identify TFs with distinct regulatory patterns that may be driving phenotypic differences.
+
+### Density plots
+
+This function allows for customization of the plot aesthetics, including fill, transparency, bandwidth adjustment for density estimation, and rug plots to show individual data points. You can also choose to save the plots directly from the function.
+
+```{r fig.height=10, fig.width=10}
+# Plot distributions for top TFs
+plot_auc_distributions(
+  simic,
+  tf_names = top_tfs[1:4],
+  fill = TRUE,
+  alpha = 0.6,
+  bw_adjust = 1/8,
+  rug = TRUE,
+  save = FALSE,
+  out_dir = plot_dir,
+  filename = "AUC_distributions.pdf",
+  grid = c(2, 2)
+)
+```
+```{r fig.height=5, fig.width=10}
+# Plot top 4 TFs density distributions
+plot_auc_distributions(simic,
+                       labels = c(0,3),
+                       tf_names = top_tfs[1:2],
+                       fill = FALSE,
+                       bw_adjust = 0.5,
+                       rug = FALSE,
+                       out_dir = plot_dir,
+                       filename="AUC_distributions_notfilled_multipage.pdf",
+                       save = FALSE,
+                       grid = c(1,2))
+```
+
+### Cumulative distributions (ECDF)
+
+```{r fig.height=10, fig.width=10}
+plot_auc_cumulative(
+  simic,
+  tf_names = top_tfs[1:4],
+  rug = TRUE,
+  grid = c(2, 2),
+  include_table = TRUE,
+  save = FALSE,
+  out_dir = plot_dir
+)
+```
+ 
+
+## ECDF-based Metrics
+
+Compute area-under-curve metrics from ECDF comparisons:
+
+```{r, eval=TRUE}
+ecdf_metrics <- calculate_ecdf_auc(simic, tf_names = simic@tf_ids[1:4])
+head(ecdf_metrics)
+```
+## Summary Statistics
+
+### Mean activity per TF × phenotype
+
+```{r}
+plot_auc_heatmap(simic, top_n = 20)
+```
+
+### Box plots and violin plots
+
+```{r, eval=TRUE}
+summary_plot <- plot_auc_summary_statistics(simic)
+```
+
+
+# Session Info
+
+```{r}
+sessionInfo()
+```

@@ -1,0 +1,52 @@
+---
+title: "SimiCPipeline"
+description: "Python package for phenotype-specific GRN inference and Regulon Activity Score (RAS) calculation."
+---
+
+SimiCPipeline is the Python component of SimiC-Suite. It supports phenotype-specific gene regulatory network (GRN) inference from single-cell RNA-seq data and calculation of Regulon Activity Score (RAS) values for downstream interpretation.
+
+SimiCPipeline builds on the SimiC framework for phenotype-aware regulatory network analysis. Please cite the original SimiC work when using SimiCPipeline where appropriate.
+
+[View SimiCPipeline on GitHub](https://github.com/ML4BM-Lab/SimiCPipeline){.btn .btn-primary}
+
+## Tutorials
+
+The tutorials below are local rendered copies of the Jupyter notebooks from the `ML4BM-Lab/SimiCPipeline` repository. They are rendered without executing code during website publication.
+
+::: {.tutorial-grid}
+
+::: {.tutorial-card .pipeline-card}
+### Full Pipeline Tutorial
+
+Complete SimiCPipeline walkthrough, including initialization, parameter configuration, GRN inference, RAS calculation, and downstream result inspection.
+
+[Open tutorial](tutorials/simicpipeline/Tutorial_SimiCPipeline_full.html){.btn .btn-primary}
+<a class="btn btn-outline-primary" href="tutorials/simicpipeline/downloads/Tutorial_SimiCPipeline_full.ipynb" download>Download notebook</a>
+:::
+
+::: {.tutorial-card .pipeline-card}
+### Preprocessing Tutorial
+
+Notebook covering data preparation steps for SimiCPipeline inputs, including expression data, transcription factor lists, and phenotype labels.
+
+[Open tutorial](tutorials/simicpipeline/Tutorial_SimiCPipeline_preprocessing.html){.btn .btn-primary}
+<a class="btn btn-outline-primary" href="tutorials/simicpipeline/downloads/Tutorial_SimiCPipeline_preprocessing.ipynb" download>Download notebook</a>
+:::
+
+::: {.tutorial-card .pipeline-card}
+### Visualization Tutorial
+
+Notebook focused on inspecting and visualizing SimiCPipeline outputs after GRN inference and RAS calculation.
+
+[Open tutorial](tutorials/simicpipeline/Tutorial_SimiCPipeline_visualization.html){.btn .btn-primary}
+<a class="btn btn-outline-primary" href="tutorials/simicpipeline/downloads/Tutorial_SimiCPipeline_visualization.ipynb" download>Download notebook</a>
+:::
+
+:::
+
+## Helper Scripts
+
+These reference scripts are copied from the SimiCPipeline notebook folder.
+
+- [run_preprocessing.py](tutorials/simicpipeline/run_preprocessing.py)
+- [run_simicpipeline.py](tutorials/simicpipeline/run_simicpipeline.py)

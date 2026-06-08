@@ -95,6 +95,53 @@ main.content {
   box-shadow: 0 8px 24px rgba(31, 41, 51, 0.12);
 }
 
+.component-grid,
+.tutorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.component-card,
+.tutorial-card {
+  padding: 1.2rem;
+  border: 1px solid var(--simic-border);
+  border-radius: 8px;
+  background: var(--simic-white);
+}
+
+.component-card h3,
+.tutorial-card h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.pipeline-card {
+  border-top: 5px solid var(--simic-purple);
+}
+
+.pipeline-card h3 {
+  color: var(--simic-purple);
+}
+
+.viz-card {
+  border-top: 5px solid var(--simic-red);
+}
+
+.viz-card h3 {
+  color: var(--simic-red);
+}
+
+.tutorial-frame {
+  width: 100%;
+  min-height: 760px;
+  border: 1px solid var(--simic-border);
+  border-radius: 8px;
+  background: var(--simic-white);
+}
+
 h2 {
   margin-top: 2.4rem;
   padding-bottom: 0.25rem;
@@ -191,6 +238,30 @@ code {
 .btn-danger:focus {
   background: #a92d28;
   border-color: #a92d28;
+}
+
+.btn-outline-primary {
+  color: var(--simic-purple);
+  border-color: var(--simic-purple);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  color: var(--simic-white);
+  background: var(--simic-purple);
+  border-color: var(--simic-purple);
+}
+
+.btn-outline-danger {
+  color: var(--simic-red);
+  border-color: var(--simic-red);
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+  color: var(--simic-white);
+  background: var(--simic-red);
+  border-color: var(--simic-red);
 }
 
 .page-footer {

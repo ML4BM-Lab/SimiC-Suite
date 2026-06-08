@@ -1,16 +1,26 @@
 project:
   type: website
+  render:
+    - "*.qmd"
+    - "tutorials/simicpipeline/*.ipynb"
+  resources:
+    - "tutorials/simicpipeline/*.ipynb"
+    - "tutorials/simicpipeline/downloads/*.ipynb"
+    - "tutorials/simicpipeline/*.py"
+    - "tutorials/simicviz/SimiCviz.html"
+    - "tutorials/simicviz/SimiCviz.Rmd"
+    - "tutorials/simicviz/SimiCviz.R"
 
 website:
   title: "SimiC-Suite"
   navbar:
-    background: "#ffffff"
-    foreground: "#1f2933"
     left:
       - href: index.qmd
         text: Home
-      - href: documentation.qmd
-        text: Documentation
+      - href: simicpipeline.qmd
+        text: SimiCPipeline
+      - href: simicviz.qmd
+        text: SimiCviz
       - href: citation.qmd
         text: Citation
   page-footer:
@@ -24,3 +34,6 @@ format:
     toc: true
     link-external-newwindow: true
 
+execute:
+  enabled: false
+  freeze: true
