@@ -11,28 +11,46 @@ description: "A reproducible framework for phenotype-specific gene regulatory ne
 
 SimiC-Suite is a software suite for phenotype-specific gene regulatory network (GRN) analysis from single-cell RNA-seq data. It brings together complementary tools for GRN inference, Regulon Activity Score (RAS) calculation, and downstream assessment and visualization.
 
-## Packages
+## Suite Components
 
-| Package | Language / ecosystem | Purpose |
-|---|---|---|
-| [SimiCPipeline](https://github.com/ML4BM-Lab/SimiCPipeline) | Python | Phenotype-specific GRN inference and Regulon Activity Score (RAS) calculation. |
-| [SimiCviz](https://github.com/ML4BM-Lab/SimiCviz) | R / Bioconductor | Tool-agnostic assessment and visualization of GRN outputs. |
+::: {.package-tabs .panel-tabset}
 
-::: {.package-band .pipeline-band}
 ## SimiCPipeline
 
-[SimiCPipeline](https://github.com/ML4BM-Lab/SimiCPipeline) is the Python component of SimiC-Suite. It supports reproducible phenotype-specific GRN inference from single-cell RNA-seq data and calculation of Regulon Activity Score (RAS) values for downstream biological interpretation.
+::: {.package-panel .pipeline-panel}
+
+**SimiCPipeline** is the Python component of SimiC-Suite for phenotype-specific GRN inference and Regulon Activity Score (RAS) calculation.
+
+| Feature | Description |
+|---|---|
+| Ecosystem | Python |
+| Primary role | Infer phenotype-specific gene regulatory networks from single-cell RNA-seq data. |
+| Main outputs | Label-specific GRN weights and Regulon Activity Score (RAS) values. |
+| Suite position | Upstream inference and RAS calculation before downstream assessment and visualization. |
 
 SimiCPipeline builds on the SimiC framework for phenotype-aware regulatory network analysis. Please cite the original SimiC work when using SimiCPipeline where appropriate.
+
+[View SimiCPipeline on GitHub](https://github.com/ML4BM-Lab/SimiCPipeline){.btn .btn-primary}
+
 :::
 
-::: {.package-band .viz-band}
 ## SimiCviz
 
-[SimiCviz](https://github.com/ML4BM-Lab/SimiCviz) is the R / Bioconductor component of SimiC-Suite. It provides tool-agnostic workflows for assessing, comparing, and visualizing GRN outputs, supporting interpretation across GRN inference methods.
+::: {.package-panel .viz-panel}
+
+**SimiCviz** is the R / Bioconductor component of SimiC-Suite for tool-agnostic assessment and visualization of GRN outputs.
+
+| Feature | Description |
+|---|---|
+| Ecosystem | R / Bioconductor |
+| Primary role | Assess, compare, and visualize GRN outputs across inference workflows. |
+| Main outputs | Reproducible tables, figures, summaries, and visualizations for GRN interpretation. |
+| Suite position | Downstream analysis and reporting after GRN inference and RAS calculation. |
+
+SimiCviz supports interpretation of GRN outputs in R-centered analysis workflows and is designed to be independent of a single GRN inference tool.
+
+[View SimiCviz on GitHub](https://github.com/ML4BM-Lab/SimiCviz){.btn .btn-danger}
+
 :::
 
-## Repositories
-
-- SimiCPipeline: <https://github.com/ML4BM-Lab/SimiCPipeline>
-- SimiCviz: <https://github.com/ML4BM-Lab/SimiCviz>
+:::

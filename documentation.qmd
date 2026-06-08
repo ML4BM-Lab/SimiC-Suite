@@ -6,29 +6,40 @@ title: "Documentation"
 
 SimiC-Suite contains two complementary packages:
 
-| Package | Main role | Repository |
-|---|---|---|
-| SimiCPipeline | Phenotype-specific GRN inference and Regulon Activity Score (RAS) calculation. | <https://github.com/ML4BM-Lab/SimiCPipeline> |
-| SimiCviz | Assessment, comparison, and visualization of GRN outputs. | <https://github.com/ML4BM-Lab/SimiCviz> |
+::: {.package-tabs .panel-tabset}
 
-::: {.package-band .pipeline-band}
 ## SimiCPipeline
+
+::: {.package-panel .pipeline-panel}
 
 Use SimiCPipeline when the goal is to infer phenotype-specific gene regulatory networks from single-cell RNA-seq data and compute Regulon Activity Score (RAS) values.
 
-Main repository:
+| Step | Purpose |
+|---|---|
+| Data preparation | Use single-cell RNA-seq counts and phenotype labels. |
+| GRN inference | Learn phenotype-specific regulatory networks. |
+| RAS calculation | Calculate Regulon Activity Score (RAS) values for downstream interpretation. |
 
-<https://github.com/ML4BM-Lab/SimiCPipeline>
+[Open SimiCPipeline repository](https://github.com/ML4BM-Lab/SimiCPipeline){.btn .btn-primary}
+
 :::
 
-::: {.package-band .viz-band}
 ## SimiCviz
+
+::: {.package-panel .viz-panel}
 
 Use SimiCviz when the goal is to assess, compare, and visualize GRN outputs in R / Bioconductor workflows. SimiCviz is designed to be tool-agnostic, so it can support outputs from different GRN inference approaches.
 
-Main repository:
+| Step | Purpose |
+|---|---|
+| GRN assessment | Inspect inferred network weights and summary statistics. |
+| RAS visualization | Compare Regulon Activity Score (RAS) patterns across labels and cell types. |
+| Reporting | Generate reproducible tables and figures for downstream analysis. |
 
-<https://github.com/ML4BM-Lab/SimiCviz>
+[Open SimiCviz repository](https://github.com/ML4BM-Lab/SimiCviz){.btn .btn-danger}
+
+:::
+
 :::
 
 ## Suggested Workflow
