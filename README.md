@@ -64,8 +64,6 @@ Key functionality includes:
 
 ## Typical Workflows
 
-## Typical Workflows
-
 ### End-to-End SimiC Workflow
 Input: single-cell RNA-seq data  
 → SimiCPipeline (preprocessing, feature selection, MAGIC imputation, GRN inference, and RAS calculation) → Phenotype-specific GRNs and RAS matrices → SimiCviz (assessment, visualization, and reporting) → Biological insights and publication-ready outputs
