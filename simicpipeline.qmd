@@ -25,6 +25,8 @@ Designed for reproducible and scalable analyses, SimiCPipeline serves as an upst
 
 ## Tutorials
 
+The tutorials below link to the `ML4BM-Lab/SimiCPipeline` repository so they always reflect the package-maintained versions.
+
 ::: {.tutorial-grid}
 
 ::: {.tutorial-card .pipeline-card}
@@ -32,8 +34,7 @@ Designed for reproducible and scalable analyses, SimiCPipeline serves as an upst
 
 Complete SimiCPipeline walkthrough, including initialization, parameter configuration, GRN inference, RAS calculation, and downstream result inspection.
 
-[Open tutorial](tutorials/simicpipeline/Tutorial_SimiCPipeline_full.html){.btn .btn-primary}
-<a class="btn btn-outline-primary" href="tutorials/simicpipeline/downloads/Tutorial_SimiCPipeline_full.ipynb" download>Download notebook</a>
+[Open notebook on GitHub](https://github.com/ML4BM-Lab/SimiCPipeline/blob/master/notebooks/Tutorial_SimiCPipeline_full.ipynb){.btn .btn-primary}
 :::
 
 ::: {.tutorial-card .pipeline-card}
@@ -41,8 +42,7 @@ Complete SimiCPipeline walkthrough, including initialization, parameter configur
 
 Notebook covering data preparation steps for SimiCPipeline inputs, including expression data imputation, transcription factor and target gene selection, and phenotype labels.
 
-[Open tutorial](tutorials/simicpipeline/Tutorial_SimiCPipeline_preprocessing.html){.btn .btn-primary}
-<a class="btn btn-outline-primary" href="tutorials/simicpipeline/downloads/Tutorial_SimiCPipeline_preprocessing.ipynb" download>Download notebook</a>
+[Open notebook on GitHub](https://github.com/ML4BM-Lab/SimiCPipeline/blob/master/notebooks/Tutorial_SimiCPipeline_preprocessing.ipynb){.btn .btn-primary}
 :::
 
 ::: {.tutorial-card .pipeline-card}
@@ -50,8 +50,7 @@ Notebook covering data preparation steps for SimiCPipeline inputs, including exp
 
 Notebook focused on inspecting and visualizing SimiCPipeline outputs after GRN inference and RAS calculation.
 
-[Open tutorial](tutorials/simicpipeline/Tutorial_SimiCPipeline_visualization.html){.btn .btn-primary}
-<a class="btn btn-outline-primary" href="tutorials/simicpipeline/downloads/Tutorial_SimiCPipeline_visualization.ipynb" download>Download notebook</a>
+[Open notebook on GitHub](https://github.com/ML4BM-Lab/SimiCPipeline/blob/master/notebooks/Tutorial_SimiCPipeline_visualization.ipynb){.btn .btn-primary}
 :::
 
 :::
@@ -60,6 +59,6 @@ Notebook focused on inspecting and visualizing SimiCPipeline outputs after GRN i
 
 These standalone scripts provide a simplified way to run the main steps of the SimiC workflow without using the full Jupyter notebooks. They are adapted from the reference notebooks included with SimiCPipeline, and can be used for command-line execution or integration into automated workflows.
 
-- [run_preprocessing.py](tutorials/simicpipeline/run_preprocessing.py): Performs data preprocessing and prepares input files for downstream SimiC analysis.
+- [run_preprocessing.py](https://github.com/ML4BM-Lab/SimiCPipeline/blob/master/notebooks/run_preprocessing.py): Performs data preprocessing and prepares input files for downstream SimiC analysis.
 
-- [run_simicpipeline.py](tutorials/simicpipeline/run_simicpipeline.py): Executes the core SimiC pipeline, including GRN inference and downstream analyses.
+- [run_simicpipeline.py](https://github.com/ML4BM-Lab/SimiCPipeline/blob/master/notebooks/run_simicpipeline.py): Executes the core SimiC pipeline, including GRN inference and downstream analyses.

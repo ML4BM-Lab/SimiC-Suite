@@ -2,15 +2,8 @@ project:
   type: website
   render:
     - "*.qmd"
-    - "tutorials/simicpipeline/*.ipynb"
     - "case-study/boiarsky/*.ipynb"
   resources:
-    - "tutorials/simicpipeline/*.ipynb"
-    - "tutorials/simicpipeline/downloads/*.ipynb"
-    - "tutorials/simicpipeline/*.py"
-    - "tutorials/simicviz/SimiCviz.html"
-    - "tutorials/simicviz/SimiCviz.Rmd"
-    - "tutorials/simicviz/SimiCviz.R"
     - "case-study/boiarsky/*.py"
     - "case-study/boiarsky/*.R"
     - "case-study/boiarsky/*.md"

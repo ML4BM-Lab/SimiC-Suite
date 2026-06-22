@@ -19,6 +19,9 @@ SimiCviz is the R component of SimiC Suite, providing tool-agnostic methods for 
 [View SimiCviz on GitHub](https://github.com/ML4BM-Lab/SimiCviz){.btn .btn-danger}
 
 ## Tutorial
+
+The tutorial below links to the `ML4BM-Lab/SimiCviz` repository so it always reflects the package-maintained version.
+
 ::: {.tutorial-grid}
 
 ::: {.tutorial-card .viz-card}
@@ -26,9 +29,9 @@ SimiCviz is the R component of SimiC Suite, providing tool-agnostic methods for 
 
 Assessment and visualization workflow for GRN outputs, including loading GRN data, computing or importing RAS values, visualizing weights, and comparing regulatory programs across phenotypes.
 
-[Open full tutorial](tutorials/simicviz/SimiCviz.html){.btn .btn-danger}
-[View R Markdown source](tutorials/simicviz/SimiCviz.Rmd){.btn .btn-outline-danger}
-[View R script](tutorials/simicviz/SimiCviz.R){.btn .btn-outline-danger}
+[Open rendered vignette](https://htmlpreview.github.io/?https://github.com/ML4BM-Lab/SimiCviz/blob/main/vignettes/SimiCviz.html){.btn .btn-danger}
+[View R Markdown source](https://github.com/ML4BM-Lab/SimiCviz/blob/main/vignettes/SimiCviz.Rmd){.btn .btn-outline-danger}
+[View R script](https://github.com/ML4BM-Lab/SimiCviz/blob/main/vignettes/SimiCviz.R){.btn .btn-outline-danger}
 :::
 
 :::
