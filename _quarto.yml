@@ -23,6 +23,8 @@ website:
         text: Case Study
       - href: citation.qmd
         text: Citation
+      - href: contact.qmd
+        text: Contact
   page-footer:
     left: "SimiC-Suite"
     right: "Built with Quarto"

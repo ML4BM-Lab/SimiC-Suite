@@ -1,0 +1,41 @@
+---
+title: "Contact"
+---
+
+## Where To Ask Questions
+
+For package-specific questions, bug reports, or feature requests, please use the GitHub Issues page for the relevant package. This keeps technical discussions visible and easier for maintainers and users to follow.
+
+::: {.tutorial-grid}
+
+::: {.tutorial-card .pipeline-card}
+### SimiCPipeline
+
+For questions about phenotype-specific GRN inference, preprocessing workflows, SimiC model execution, or RAS calculation in Python.
+
+[Open SimiCPipeline issues](https://github.com/ML4BM-Lab/SimiCPipeline/issues){.btn .btn-primary}
+[View SimiCPipeline repository](https://github.com/ML4BM-Lab/SimiCPipeline){.btn .btn-outline-primary}
+:::
+
+::: {.tutorial-card .viz-card}
+### SimiCviz
+
+For questions about GRN assessment, visualization, R / Bioconductor workflows, and downstream analysis of RAS results.
+
+[Open SimiCviz issues](https://github.com/ML4BM-Lab/SimiCviz/issues){.btn .btn-danger}
+[View SimiCviz repository](https://github.com/ML4BM-Lab/SimiCviz){.btn .btn-outline-danger}
+:::
+
+:::
+
+## General Inquiries
+
+For broader questions about SimiC-Suite, manuscript-related inquiries, or collaboration, please contact the ML4BM Lab:
+
+[mhernaez@unav.es](mailto:mhernaez@unav.es){.btn .btn-outline-primary}
+
+## Website Issues
+
+For issues with this documentation website itself, please use the SimiC-Suite repository.
+
+[Open SimiC-Suite issues](https://github.com/ML4BM-Lab/SimiC-Suite/issues){.btn .btn-outline-primary}
