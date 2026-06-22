@@ -64,13 +64,15 @@ Key functionality includes:
 
 ## Typical Workflows
 
-### End-to-End SimiC Workflow
+## Typical Workflows
 
-text Single-cell RNA-seq data           │           ▼ SimiCPipeline (Python)   • Preprocessing   • GRN inference   • RAS calculation           │           ▼ Phenotype-specific GRNs and RAS matrices           │           ▼ SimiCviz (R)   • Assessment   • Visualization   • Reporting           │           ▼ Biological insights and publication-ready outputs 
+### End-to-End SimiC Workflow
+Input: single-cell RNA-seq data  
+→ SimiCPipeline (preprocessing, feature selection, MAGIC imputation, GRN inference, and RAS calculation) → Phenotype-specific GRNs and RAS matrices → SimiCviz (assessment, visualization, and reporting) → Biological insights and publication-ready outputs
 
 ### Tool-Agnostic Workflow
-
-text SCENIC / Pando / other GRN inference methods               │               ▼ TF–target weight matrices and expression data               │               ▼ SimiCviz (R)   • RAS calculation   • Network assessment   • Comparative analysis   • Visualization               │               ▼ RAS profiles, figures, and downstream analyses 
+Input: GRNs from SCENIC, Pando, or other inference methods that produce TF x weight matricies
+TF–target weight matrices plus expression data → SimiCviz (for RAS calculation, network assessment, comparative analysis, visualization, and reporting) → Figures, reports, and downstream analyses
 
 ---
 
