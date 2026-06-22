@@ -41,7 +41,7 @@ Key functionality includes:
 
 ---
 
-### SimiCviz (R / Bioconductor)
+### SimiCviz (R)
 
 📦 Repository: https://github.com/ML4BM-Lab/SimiCviz
 
