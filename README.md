@@ -7,7 +7,7 @@ The suite comprises two complementary software packages:
 | Package | Language | Description |
 |----------|----------|-------------|
 | SimiCPipeline | Python | Phenotype-specific GRN inference and Regulon Activity Score (RAS) calculation |
-| SimiCviz | R / Bioconductor | Tool-agnostic assessment and visualization of GRN outputs |
+| SimiCviz | R | Tool-agnostic RAS calculation, assessment and visualization of GRN outputs |
 
 Together, these packages support reproducible GRN inference, RAS calculation, regulatory dissimilarity analysis, and downstream visualization across Python and R workflows.
 
@@ -66,11 +66,11 @@ Key functionality includes:
 
 ### End-to-End SimiC Workflow
 
-text scRNA-seq data         │         ▼ SimiCPipeline (Python)         │         ▼ Phenotype-specific GRNs         │         ▼ Regulon Activity Scores (RAS)         │         ▼ SimiCviz (R)         │         ▼ Visualization and downstream analysis 
+text Single-cell RNA-seq data           │           ▼ SimiCPipeline (Python)   • Preprocessing   • GRN inference   • RAS calculation           │           ▼ Phenotype-specific GRNs and RAS matrices           │           ▼ SimiCviz (R)   • Assessment   • Visualization   • Reporting           │           ▼ Biological insights and publication-ready outputs 
 
 ### Tool-Agnostic Workflow
 
-text SCENIC / Pando / Custom GRN                 │                 ▼ TF × target weight matrices                 │                 ▼ SimiCviz (R)                 │                 ▼ RAS calculation Dissimilarity analysis Visualization 
+text SCENIC / Pando / other GRN inference methods               │               ▼ TF–target weight matrices and expression data               │               ▼ SimiCviz (R)   • RAS calculation   • Network assessment   • Comparative analysis   • Visualization               │               ▼ RAS profiles, figures, and downstream analyses 
 
 ---
 
@@ -90,10 +90,6 @@ If you use SimiC-Suite in your research, please cite:
 ### SimiC-Suite
 
 Citation will be added upon publication.
-
-### SimiCPipeline / SimiC
-
-Peng, J., Serrano, G., Traniello, I.M. et al. SimiC enables the inference of complex gene regulatory dynamics across cell phenotypes. Commun Biol 5, 351 (2022). https://doi.org/10.1038/s42003-022-03319-7
 
 ---
 
