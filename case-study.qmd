@@ -1,0 +1,87 @@
+---
+title: "Case Study"
+---
+This page presents the scripts used for the manuscript case study applying the SimiC-Suite workflow to the Boiarsky et al. NBM, SMM, and MM plasma-cell scRNA-seq dataset. The scripts are included as static resources for transparency and reproducibility.
+
+## Dataset
+
+This case study applies SimiC-Suite to the single-cell RNA-seq cohort from Boiarsky et al. (2022), which profiles CD138+ plasma cells across normal bone marrow and multiple stages of myeloma progression.
+
+The original dataset contains four disease labels: normal bone marrow (NBM), monoclonal gammopathy of undetermined significance (MGUS), smoldering multiple myeloma (SMM), and multiple myeloma (MM). For this analysis, we retained the NBM, SMM, and MM groups and excluded MGUS samples.
+
+MGUS was excluded because it contained relatively few cells and was reported to have a low estimated fraction of malignant plasma cells. Consequently, the MGUS population was expected to contain a substantial proportion of normal plasma cells, making it less representative of a distinct malignant disease state and potentially confounding phenotype-specific regulatory network inference.
+
+## Workflow Overview
+
+The workflow follows the same overall structure as the SimiC-Suite manuscript case study:
+
+1. Retrieve and prepare the Boiarsky scRNA-seq dataset.
+2. Run SimiCPipeline preprocessing to generate imputed expression, transcription factor lists, selected target genes, and phenotype annotations.
+3. Run SimiCPipeline for phenotype-specific GRN inference and RAS calculation.
+4. Use SimiCviz to inspect GRN quality, compare regulatory programs, and generate downstream figures.
+5. Project RAS values onto the processed AnnData UMAP for visual interpretation.
+
+The public GEO matrix is used directly.
+
+## Requirements
+
+Python requirements include `simicpipeline`, `anndata`, `pandas`, `numpy`, `scipy`, `scikit-learn`, `scanpy`, `magic-impute`, and `scprep`.
+
+R requirements include `SimiCviz`, `ComplexHeatmap`, `circlize`, `viridisLite`, `dplyr`, `tidyr`, `tibble`, and `grid`.
+
+## Workflow Scripts
+
+::: {.tutorial-grid}
+
+::: {.tutorial-card .pipeline-card}
+### 01 Data Retrieval
+
+Python script for downloading and preparing the Boiarsky et al. dataset, filtering stages, generating QC plots, and exporting SimiCPipeline-compatible inputs.
+
+[View script](case-study/boiarsky/01_data_retrieval.py){.btn .btn-primary}
+<a class="btn btn-outline-primary" href="case-study/boiarsky/01_data_retrieval.py" download>Download script</a>
+:::
+
+::: {.tutorial-card .pipeline-card}
+### 02 SimiCPipeline Preprocessing
+
+Jupyter notebook for SimiCPipeline preprocessing, including imputation, transcription factor selection, target gene selection, and phenotype annotation setup.
+
+[Open notebook](case-study/boiarsky/02_SimiCPipeline_preprocessing.html){.btn .btn-primary}
+<a class="btn btn-outline-primary" href="case-study/boiarsky/downloads/02_SimiCPipeline_preprocessing.ipynb" download>Download notebook</a>
+:::
+
+::: {.tutorial-card .pipeline-card}
+### 03 SimiCPipeline Run
+
+Python script for running SimiCPipeline cross-validation, GRN inference, filtering, and RAS calculation.
+
+[View script](case-study/boiarsky/03_SimiCPipeline_run.py){.btn .btn-primary}
+<a class="btn btn-outline-primary" href="case-study/boiarsky/03_SimiCPipeline_run.py" download>Download script</a>
+:::
+
+::: {.tutorial-card .viz-card}
+### 04 SimiCviz Explorations
+
+R / SimiCviz script for loading SimiCPipeline outputs, exploring GRN quality, calculating dissimilarity, and generating downstream case-study figures.
+
+[View R script](case-study/boiarsky/04_Simicviz_explorations.R){.btn .btn-danger}
+<a class="btn btn-outline-danger" href="case-study/boiarsky/04_Simicviz_explorations.R" download>Download R script</a>
+:::
+
+::: {.tutorial-card .pipeline-card}
+### 05 RAS on UMAP
+
+Python script for overlaying RAS values from the SimiCPipeline output onto the processed AnnData UMAP.
+
+[View script](case-study/boiarsky/05_RAS_on_umap_AnnData.py){.btn .btn-primary}
+<a class="btn btn-outline-primary" href="case-study/boiarsky/05_RAS_on_umap_AnnData.py" download>Download script</a>
+:::
+
+:::
+
+## Dataset Citation
+
+Boiarsky, R., Haradhvala, N.J., Alberge, J.B. et al. Single cell characterization of myeloma and its precursor conditions reveals transcriptional signatures of early tumorigenesis. *Nature Communications* 13, 7040 (2022). <https://doi.org/10.1038/s41467-022-33944-z>
+
+Please also cite the SimiC-Suite manuscript when using this workflow.

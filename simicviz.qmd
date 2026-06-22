@@ -1,6 +1,5 @@
 ---
-title: "SimiCviz"
-description: "R / Bioconductor package for tool-agnostic assessment and visualization of GRN outputs."
+title: "SimiCviz" 
 ---
 
 <style>
@@ -9,22 +8,23 @@ description: "R / Bioconductor package for tool-agnostic assessment and visualiz
 }
 </style>
 
-SimiCviz is the R / Bioconductor component of SimiC-Suite. It supports tool-agnostic assessment, comparison, visualization, and reporting for GRN outputs, including outputs produced by SimiCPipeline.
+## Overview
+SimiCviz is the R component of SimiC Suite, providing tool-agnostic methods for calculating RAS from inferred regulatory networks, assessing and comparing regulatory programs, and generating reproducible visualizations and reports. Compatible with outputs from SimiCPipeline and other network inference frameworks, it supports downstream interpretation of regulatory activity through network-level and cell-level analyses.
 
-Use SimiCviz when the goal is to inspect inferred network weights, compare regulatory programs, visualize Regulon Activity Score (RAS) patterns, and generate reproducible figures and tables.
+
+::: {.graphical-abstract}
+![SimiCviz graphical abstract](figures/simicviz_graphical_abstract.png){fig-alt="Graphical abstract summarizing the SimiCviz workflow from GRN outputs and optional single-cell RNA-seq counts to RAS calculation, downstream analyses, comparisons, and visualizations."}
+:::
 
 [View SimiCviz on GitHub](https://github.com/ML4BM-Lab/SimiCviz){.btn .btn-danger}
 
 ## Tutorial
-
-The tutorial below is a local copy of the pre-rendered SimiCviz vignette from the `ML4BM-Lab/SimiCviz` repository. It is included as existing HTML so the website can publish without installing or executing R / Bioconductor dependencies.
-
 ::: {.tutorial-grid}
 
 ::: {.tutorial-card .viz-card}
-### SimiCviz R / Bioconductor Tutorial
+### SimiCviz R Tutorial
 
-Assessment and visualization workflow for GRN outputs, including loading GRN data, computing or importing Regulon Activity Score (RAS) values, visualizing weights, and comparing regulatory programs across phenotypes.
+Assessment and visualization workflow for GRN outputs, including loading GRN data, computing or importing RAS values, visualizing weights, and comparing regulatory programs across phenotypes.
 
 [Open full tutorial](tutorials/simicviz/SimiCviz.html){.btn .btn-danger}
 [View R Markdown source](tutorials/simicviz/SimiCviz.Rmd){.btn .btn-outline-danger}
@@ -32,7 +32,3 @@ Assessment and visualization workflow for GRN outputs, including loading GRN dat
 :::
 
 :::
-
-## Embedded Preview
-
-<iframe class="tutorial-frame" src="tutorials/simicviz/SimiCviz.html" title="SimiCviz rendered tutorial"></iframe>

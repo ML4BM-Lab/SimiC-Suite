@@ -3,6 +3,7 @@ project:
   render:
     - "*.qmd"
     - "tutorials/simicpipeline/*.ipynb"
+    - "case-study/boiarsky/*.ipynb"
   resources:
     - "tutorials/simicpipeline/*.ipynb"
     - "tutorials/simicpipeline/downloads/*.ipynb"
@@ -10,6 +11,10 @@ project:
     - "tutorials/simicviz/SimiCviz.html"
     - "tutorials/simicviz/SimiCviz.Rmd"
     - "tutorials/simicviz/SimiCviz.R"
+    - "case-study/boiarsky/*.py"
+    - "case-study/boiarsky/*.R"
+    - "case-study/boiarsky/*.md"
+    - "case-study/boiarsky/downloads/*.ipynb"
 
 website:
   title: "SimiC-Suite"
@@ -21,6 +26,8 @@ website:
         text: SimiCPipeline
       - href: simicviz.qmd
         text: SimiCviz
+      - href: case-study.qmd
+        text: Case Study
       - href: citation.qmd
         text: Citation
   page-footer:

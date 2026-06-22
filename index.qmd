@@ -1,15 +1,16 @@
 ---
 title: "SimiC-Suite"
-description: "A reproducible framework for phenotype-specific gene regulatory network analysis from single-cell RNA-seq data."
 ---
+
+## Overview
+
+SimiC-Suite is an open-source software framework for inferring and studying phenotype-specific gene regulatory networks (GRNs) from single-cell RNA-seq data. The suite combines robust network inference, regulon activity score (RAS) calculation, and comprehensive visualization tools into a unified workflow for exploring regulatory mechanisms across biological conditions.
+
+Designed for reproducible and interpretable GRN analysis, SimiC-Suite supports researchers from data preprocessing and GRN inference through downstream assessment, visualization, and reporting.
 
 ::: {.graphical-abstract}
 ![SimiC-Suite graphical abstract](figures/simic_suite_graphical_abstract.png){fig-alt="Graphical abstract summarizing the SimiC-Suite workflow from single-cell RNA-seq inputs through SimiCPipeline, SimiCviz, and downstream reporting."}
 :::
-
-## Overview
-
-SimiC-Suite is a software suite for phenotype-specific gene regulatory network (GRN) analysis from single-cell RNA-seq data. It brings together complementary tools for GRN inference, Regulon Activity Score (RAS) calculation, and downstream assessment and visualization.
 
 ## Suite Components
 
@@ -18,13 +19,13 @@ SimiC-Suite is a software suite for phenotype-specific gene regulatory network (
 ::: {.component-card .pipeline-card}
 ### SimiCPipeline
 
-Python package for phenotype-specific GRN inference and Regulon Activity Score (RAS) calculation.
+Python package for phenotype-specific GRN inference, RAS calculation and downstream assessment and visualization of GRN outputs.
 
 | Feature | Description |
 |---|---|
 | Ecosystem | Python |
-| Role | Upstream inference and RAS calculation. |
-| Tutorials | Rendered Jupyter notebooks from the package repository. |
+| Role | Upstream inference and RAS calculation. Downstream assessment and visualization workflows described. |
+| Tutorials | Jupyter notebooks from the package repository. |
 
 [Open SimiCPipeline](simicpipeline.qmd){.btn .btn-primary}
 :::
@@ -32,12 +33,12 @@ Python package for phenotype-specific GRN inference and Regulon Activity Score (
 ::: {.component-card .viz-card}
 ### SimiCviz
 
-R / Bioconductor package for tool-agnostic assessment and visualization of GRN outputs.
+R package for tool-agnostic RAS calculation, assessment and visualization of GRN outputs.
 
 | Feature | Description |
 |---|---|
 | Ecosystem | R / Bioconductor |
-| Role | Downstream assessment, visualization, and reporting. |
+| Role | RAS calculation, downstream assessment, visualization, and reporting. |
 | Tutorials | Local copy of the rendered package vignette. |
 
 [Open SimiCviz](simicviz.qmd){.btn .btn-danger}
