@@ -20,7 +20,7 @@ For questions about phenotype-specific GRN inference, preprocessing workflows, S
 ::: {.tutorial-card .viz-card}
 ### SimiCviz
 
-For questions about GRN assessment, visualization, R / Bioconductor workflows, and downstream analysis of RAS results.
+For questions about RAS calculation, GRN assessment, visualization, R workflows, and downstream analysis of RAS results.
 
 [Open SimiCviz issues](https://github.com/ML4BM-Lab/SimiCviz/issues){.btn .btn-danger}
 [View SimiCviz repository](https://github.com/ML4BM-Lab/SimiCviz){.btn .btn-outline-danger}
@@ -30,7 +30,7 @@ For questions about GRN assessment, visualization, R / Bioconductor workflows, a
 
 ## General Inquiries
 
-For broader questions about SimiC-Suite, manuscript-related inquiries, or collaboration, please contact the ML4BM Lab:
+For questions about SimiC-Suite, manuscript-related inquiries, or potential collaborations, please email the ML4BM Lab.
 
 [mhernaez@unav.es](mailto:mhernaez@unav.es){.btn .btn-outline-primary}
 
